@@ -4,6 +4,12 @@
   box-sizing: border-box;
 }
 
+:root {
+  --BLUE: rgb(86, 114, 198);
+  --DARK-BLUE: rgb(40, 63, 132);
+  --DARKER-BLUE: rgb(37, 40, 52);
+}
+
 html {
   font-size: 22px;
 }
@@ -15,6 +21,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--DARKER-BLUE);
+  color: #eee;
 }
 
 .App {
@@ -25,14 +33,15 @@ body {
   height: 100vh;
   width: 100%; 
   max-width: 500px;
-  border: 1px solid royalblue;
+  border: 1px solid var(--DARKER-BLUE);
+  background-color: var(--DARK-BLUE);
   margin: auto;
 }
 
 header {
   width: 100%;
   padding: 0 0.25em;
-  background-color: royalblue;
+  background-color: var(--BLUE);
   color: aliceblue;
   display: flex;
   justify-content: space-between;
@@ -52,7 +61,7 @@ main {
 footer {
   width: 100%;
   padding: 0.25em 0;
-  background-color: royalblue;
+  background-color: var(--BLUE);
   color: aliceblue;
   display: flex;
   justify-content: center;
@@ -69,13 +78,23 @@ ul li::before {
   content: "\200B";
 }
 
+input {
+  background-color: var(--BLUE);
+  color: #eee;
+}
+
+::placeholder {
+  color: #eee;
+  opacity: 0.75;
+}
+
 .item {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   padding: 0.5rem 0 0.5rem 0.5rem;
   margin: 0.25rem 0;
-  background-color: #eee;
+  background-color: var(--BLUE);
 }
 
 .item:first-child {
@@ -108,12 +127,12 @@ ul li::before {
   min-width: 48px;
   height: 36px;
   font-size: 1rem;
-  color: steelblue;
+  color: var(--DARK-BLUE);
   cursor: pointer;
 }
 
 .item svg:focus, .item svg:hover {
-  color: red;
+  color: #eee;
   outline: none;
 }
 
@@ -149,13 +168,13 @@ button {
   padding: 0.5rem;
   font-size: 1rem;
   background-color: aliceblue;
-  color: royalblue;
+  color: var(--DARK-BLUE);
   cursor: pointer;
 }
 
 button:focus, button:hover {
   color: white;
-  background-color: limegreen;
+  background-color: var(--DARKER-BLUE);
   outline: none;
 }
 
