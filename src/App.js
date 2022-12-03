@@ -4,6 +4,7 @@ import AddItem from './AddItem';
 import Content from './Content';
 import Footer from './Footer';
 import { useState, useEffect } from 'react';
+import apiRequest from './apiRequest';
 
 function App() {
   const API_URL = 'http://localhost:3500/items';
@@ -29,26 +30,54 @@ function App() {
       }
     }
 
-    setTimeout(() => {
-      fetchItems();
-    }, 2000)
+    fetchItems();
   }, [])
 
-  const addItem = (item) => {
+  const addItem = async (item) => {
     const id = items.length ? items[items.length - 1].id + 1 : 1;
-    const theNewItem = { id, checked: false, item };
-    const listItems = [...items, theNewItem];
+    const newItem = { id, checked: false, item };
+    const listItems = [...items, newItem];
     setItems(listItems);
+
+    const postOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newItem)
+    }
+
+    const result = await apiRequest(API_URL, postOptions);
+    if (result) setFetchError(result);
   }
 
-  const handleCheck = (id) => {
+  const handleCheck = async (id) => {
     const listItems = items.map((item) => item.id === id ? { ...item, checked: !item.checked } : item);
     setItems(listItems);
+    const updateItem = listItems.filter((item) => item.id === id);
+
+    const updateOptions = {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ checked: updateItem[0].checked })
+    }
+
+    const url = `${API_URL}/${id}`;
+    const result = await apiRequest(url, updateOptions);
+    if (result) setFetchError(result);
   }
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     const listItems = items.filter((item) => item.id !== id);
     setItems(listItems);
+
+    const deleteOptions = { method: 'DELETE' }
+    
+    const url = `${API_URL}/${id}`;
+    const result = await apiRequest(url, deleteOptions);
+    if (result) setFetchError(result);
   }
 
   const handleSubmit = (e) => {
